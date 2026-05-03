@@ -253,7 +253,7 @@ app.get('/admin', (req, res) =>
 
 
 // ── STRIPE PAYMENT ──
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY !== "sk_test_placeholder" ? require("stripe")(process.env.STRIPE_SECRET_KEY) : null;
 
 const PLANS = {
   starter: { name: 'Starter', price: 150000, currency: 'mad', description: 'AI Chatbot + 3 Automations' },
@@ -365,3 +365,4 @@ app.listen(PORT, () => {
   console.log(`   OpenAI:    ${process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'sk-your-key-here' ? '✅ Connected' : '⚡ Fallback mode'}`);
   console.log(`\n🔑 Login: admin / tawhid2025\n`);
 });
+// Stripe null guard already handled above
